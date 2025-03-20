@@ -23,7 +23,10 @@ export default function HomeComponent() {
           This was a project I created for Strawberry in under 1 hour. So it’s obviously very limited. For now you can only search for BMW cars on the Swedish car sales platform Blocket.
         </p>
         <p className="w-full max-w-[500px] text-center mx-auto font-medium mt-3 md:mt-4">
-          Search for any BMW you want without specifying anything but the model name. For example <span className="font-bold">"BMW F10 M5 max 500k och 10k mil"</span>
+          Search for any BMW you want. For example
+          <br />
+          <span className="font-bold">"BMW F10 M5 max 500k och 10k mil"</span> or <span className="font-bold">"E90 M3"</span>
+          <br /> The AI search engine will saerch the internet to find relevant filtering information.
         </p>
       </div>
     </main>
