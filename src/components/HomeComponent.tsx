@@ -1,9 +1,7 @@
 "use client"
 import DescriptionForm from "./molecules/DescriptionForm";
-import HomeUpperSection from "./molecules/HomeUpperSection";
 import { useHouseQuery } from "@/utils/hooks/useHouseQuery";
 import { useState } from "react";
-import ErrorToast from "./organisms/ErrorToast";
 
 
 
@@ -16,11 +14,18 @@ export default function HomeComponent() {
 
   return (
     <main
-      className="max-w-[85%] w-[1059px] min-h-screen flex flex-col justify-center mx-auto">
-      {/* Custom toast with error message */}
-      {error && <ErrorToast errMsg="Connected but could not get any data" />}
-      <HomeUpperSection />
-      <DescriptionForm setUserQuery={setUserQuery} />
+      className="max-w-[85%] min-h-screen flex flex-col justify-center mx-auto">
+      <div className="bg-black w-full h-[80vh] rounded-2xl bg-gradient-to-br from-[#DBEAFE] to-[#F2E8FF] pt-10 px-4 lg:px-0 md:pt-24">
+        <h1 className="text-[#CD7BE7] text-4xl md:text-7xl lg:text-8xl font-semibold text-center md:!leading-[100px] lg:!leading-[120px]
+        text-transparent bg-clip-text bg-gradient-to-br from-[#766BF6] to-[#CD7BE7]">The Intelligent Searcher</h1>
+        <DescriptionForm setUserQuery={setUserQuery} />
+        <p className="w-full max-w-[500px] text-center mx-auto font-medium mt-4 md:mt-9">
+          This was a project I created for Strawberry in under 1 hour. So it’s obviously very limited. For now you can only search for BMW cars on the Swedish car sales platform Blocket.
+        </p>
+        <p className="w-full max-w-[500px] text-center mx-auto font-medium mt-3 md:mt-4">
+          Search for any BMW you want without specifying anything but the model name. For example <span className="font-bold">"BMW F10 M5 max 500k och 10k mil"</span>
+        </p>
+      </div>
     </main>
   )
 }

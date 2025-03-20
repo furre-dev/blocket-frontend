@@ -25,17 +25,16 @@ export default function DescriptionForm({ setUserQuery }: { setUserQuery: Dispat
 
   return (
     <>
-      <form onSubmit={handleSubmit(submitInput)} className="mt-14">
-        <div className="w-full flex items-center border-[2px] border-[#9F9D9C] rounded-[11px] p-3 relative">
-          <span className="material-symbols-rounded text-[#9F9D9C] !text-[24px] md:!text-[38px] pr-1 md:pr-3">
-            search
-          </span>
+      <form onSubmit={handleSubmit(submitInput)} className="max-w-[450px] mx-auto mt-4 md:mt-20">
+        <div className="flex flex-col sm:flex-row gap-2 border-gray-300 md:border md:bg-white rounded-lg p-2">
           <input
             autoComplete="off"
             {...register("description", { required: "Skriv en beskrivning om bilen du söker!" })}
-            placeholder="Vilken bil är du ute efter?"
-            className="text-base md:text-2xl font-normal w-full outline-none bg-transparent" />
-          <button type="submit" className="w-[70px] md:w-[100px] bg-[#0071EB] text-white rounded-[11px] absolute right-2 h-[80%] hover:opacity-80">Sök</button>
+            placeholder="Vilken BMW är du ute efter?"
+            className="flex-1 px-2 py-2 rounded-lg border border-gray-300 bg-transparent bg-white md:border-none text-black placeholder:text-gray-500 focus:ring-0 outline-none" />
+          <button
+            type="submit"
+            className="bg-black text-white px-6 py-2 rounded-lg font-semibold hover:bg-black/80">Search</button>
         </div>
         {errors.description && <p className="text-[#ef4050] absolute">{errors.description.message}</p>}
       </form>

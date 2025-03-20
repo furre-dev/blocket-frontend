@@ -4,8 +4,6 @@ import { generateCarSearchURL } from "@/utils/functions/generateCarSearchURL";
 
 export default function Home() {
   return (
-    <>
-      <HomeComponent />
-    </>
+    <HomeComponent />
   );
 } 

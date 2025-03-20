@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import localFont from "next/font/local"
-import { Open_Sans } from "next/font/google"
-const mainFont = Open_Sans({ subsets: ["latin"] })
+import { Red_Hat_Display } from "next/font/google"
+const mainFont = Red_Hat_Display({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "Blocket - Enhanced car search",
