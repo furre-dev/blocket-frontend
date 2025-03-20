@@ -15,7 +15,7 @@ export default function HomeComponent() {
   return (
     <main
       className="max-w-[85%] min-h-screen flex flex-col justify-center mx-auto">
-      <div className="bg-black w-full h-[80vh] rounded-2xl bg-gradient-to-br from-[#DBEAFE] to-[#F2E8FF] pt-10 px-4 lg:px-0 md:pt-24">
+      <div className="bg-black w-full h-[95vh] md:h-[80vh] rounded-2xl bg-gradient-to-br from-[#DBEAFE] to-[#F2E8FF] pt-10 px-4 lg:px-0 md:pt-24">
         <h1 className="text-[#CD7BE7] text-4xl md:text-7xl lg:text-8xl font-semibold text-center md:!leading-[100px] lg:!leading-[120px]
         text-transparent bg-clip-text bg-gradient-to-br from-[#766BF6] to-[#CD7BE7]">The Intelligent Searcher</h1>
         <DescriptionForm setUserQuery={setUserQuery} />
