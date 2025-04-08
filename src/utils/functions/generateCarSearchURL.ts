@@ -17,12 +17,12 @@ export function generateCarSearchURL(obj: ICarSearchQueryType) {
     filters.push(`filter=${JSON.stringify({ key: "modelYear", range: { start: `${obj.minModelYear}`, end: "" } })}`);
   }
 
-  if (obj.carBrand) {
-    filters.push(`filter=${JSON.stringify({ key: "make", values: [obj.carBrand] })}`);
+  if (obj.car_model?.make_brand) {
+    filters.push(`filter=${JSON.stringify({ key: "make", values: [obj.car_model?.make_brand] })}`);
   }
 
-  if (obj.carModel) {
-    filters.push(`filter=${JSON.stringify({ key: "models", values: [obj.carModel] })}`);
+  if (obj.car_model?.make_model) {
+    filters.push(`filter=${JSON.stringify({ key: "models", values: [obj.car_model?.make_model] })}`);
   }
 
   if (obj.fuelType) {
