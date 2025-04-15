@@ -1,6 +1,8 @@
 import { ICarSearchQueryType } from "../enums/promptDataResponse";
 
 
+//TODO Handle each one automatically with an array of filters we need.
+
 export function generateCarSearchURL(obj: ICarSearchQueryType) {
   let baseUrl = "https://www.blocket.se/bilar/sok";
   let filters = [];

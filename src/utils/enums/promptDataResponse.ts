@@ -1,7 +1,7 @@
 import { z } from "zod"
 import { allBrands } from "./allCarBrandsAndModels"
 
-export const CarSearchResponseObject = z.object({
+export const CarSearchObject = z.object({
   car_model: z.object({
     make_brand: z.union([
       z.enum(allBrands),
@@ -51,5 +51,9 @@ export const CarSearchResponseObject = z.object({
   ]),
 })
 
+export const CarSearchResponse = z.object({
+  car_data: z.union([CarSearchObject, z.null()])
+})
+
 //The enum is the expected schema response from the AI, and ICarSearchQueryType is the schema that we want to pass when setting data and creating blocket url.
-export type ICarSearchQueryType = z.infer<typeof CarSearchResponseObject>
+export type ICarSearchQueryType = z.infer<typeof CarSearchObject>

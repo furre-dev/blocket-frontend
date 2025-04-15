@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  images: {
+    domains: ['i.blocketcdn.se']
+  }
+}
 
-export default nextConfig;
+export default nextConfig
