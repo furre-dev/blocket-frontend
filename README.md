@@ -18,7 +18,7 @@ Welcome to **Blocket - Enhanced Car Search**! This is a Next.js application desi
 
 Blocket doesn’t always provide the most precise filters, so this app includes workarounds to help you target exactly what you’re looking for:
 
-### 1. **Filter for Cupra Models (e.g., Seat Leon Cupra)**  
+### 1. **Filter for performance models (e.g., Seat Leon Cupra)**  
 Blocket lacks direct filters for certain performance submodels like the **Cupra**, but we can infer them using horsepower ranges.
 
 **Example filter:**  
