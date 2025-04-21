@@ -67,7 +67,7 @@ export default function ChatView() {
         exit={{ opacity: 0, y: 10, transition: { delay: 0.2 } }}
         onSubmit={handleSubmit(submitInput)} className="w-full flex gap-2">
         <input
-          {...register("query")}
+          {...register("query", { required: true })}
           placeholder="Beskriv din drömbil"
           className="bg-[#FAFAFA] border-[#D9D9D9] border-2 rounded-[10px] px-5 py-2 flex-grow outline-none" />
         <button className="bg-[#EF404F] px-4 py-0 rounded-[10px] text-white">Skicka</button>
