@@ -22,19 +22,46 @@ export default function useMessages() {
   }, [messages?.length, isTyping]);
 
   const handleSendMessage = async (msg: TextInputMessage) => {
+    // we push the user message to the chat window
     newMessage(msg);
 
-    await randomDelay();
+    // first we give them the feedback message indicating that the search has begun.
+    await sendFilterProcessStartedMessageToUser()
 
+    // then we actually try to filter the search query
+    const responseMessages = await getBlocketLinkAndExampleListing(msg.content);
+
+    // when we've got the data, we give user the feedback that the Johan is done serching 
+    // and is now sending this data to the chat.
     setIsTyping(true);
 
-    const responseMessages = await getBlocketLinkAndExampleListing(msg.content);
+    // random delay to "replicate" a humans writing time
+    await randomDelay();
 
     responseMessages.forEach((message) => {
       newMessage(message)
     })
 
+    // now Johan has sent all the messages to the chat and can stop writing.
     setIsTyping(false);
+  }
+
+  const sendFilterProcessStartedMessageToUser = async () => {
+    await randomDelay();
+
+    setIsTyping(true);
+
+    await randomDelay();
+
+    const processHasStartedMessage: TextInputMessage = {
+      messageType: MessageType.TEXT_INPUT,
+      sender: "system",
+      content: "Tack för ditt sök! Nu sätter jag igång med att leta efter annonser som matchar dina önskemål. Om din sökning är lite mer avancerad kan det ta en liten stund, men jag uppskattar verkligen ditt tålamod, snart återkommer jag med något spännande.",
+    }
+
+    newMessage(processHasStartedMessage);
+
+    setIsTyping(false)
   }
 
   const newMessage = (msg: Message | null) => {
