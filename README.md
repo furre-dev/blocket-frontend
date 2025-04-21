@@ -23,7 +23,7 @@ Blocket lacks direct filters for certain performance submodels like the **Cupra*
 
 **Example filter:**  
 ```
-brand: "Seat",
+make: "Seat",
 model: "Leon",
 engineEffect: { start: 270, end: 320 }
 ```
@@ -52,7 +52,7 @@ Some specific models—like the **C63 AMG**—don’t exist in Blocket’s stand
 
 For example:  
 ```
-brand: "Mercedes-Benz",
+make: "Mercedes-Benz",
 model: "AMG-Modeller",
 query: "C 63"
 ```
