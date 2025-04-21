@@ -6,7 +6,7 @@ import { ReactNode } from "react";
 
 export default function LinkWrapper({ children, href }: { children: ReactNode, href: string }) {
   return (
-    <Link href={href} target={"_blank"}>
+    <Link href={href} target={"_blank"} className="max-w-[80%]">
       {children}
     </Link>
   )

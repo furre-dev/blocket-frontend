@@ -6,7 +6,7 @@ export default function ListingLinkPreview({ linkListing }: { linkListing: Examp
 
   return (
     <LinkWrapper href={linkListing.link}>
-      <div className="bg-[#F1F5F9] border-[#A4A4A4] border rounded-[10px] pb-2 w-[380px] max-w-[80%] overflow-hidden flex-shrink-0">
+      <div className="bg-[#F1F5F9] border-[#A4A4A4] border rounded-[10px] pb-2 w-[380px] max-w-full overflow-hidden flex-shrink-0">
         {linkListing.thumbnail_image && (
           <Image
             className="h-[150px] md:h-[250px] object-cover bg-top"
