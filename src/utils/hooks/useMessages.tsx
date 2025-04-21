@@ -1,29 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import { useSearchQuery } from "./useSearchQuery";
-import { createLinkMessage, createMessage } from "../functions/messageFunctions";
-import { ExampleListing } from "../types/exampleListing";
-
-export type Message = {
-  sender: "user" | "system",
-  content: string | null,
-  isLink: {
-    listing: ExampleListing | null
-    link_to_listings: string | null
-  }
-}
+import { getBlocketLinkAndExampleListing } from "./useSearchQuery";
+import { Message, MessageType, TextInputMessage } from "../types/messageTypes";
+import { randomDelay } from "../getRandomDelay";
 
 export default function useMessages() {
-  const { getBlocketLinkAndExampleListing, urlState } = useSearchQuery();
-
   const scrollRef = useRef<HTMLElement>(null);
 
   const [messages, setMessages] = useState<Message[] | null>([{
     sender: "system",
     content: "Hej, Johan heter jag och är bil-expert på Blocket! Berätta gärna vad du är ute efter för bil, så ska jag hjälpa dig att hitta rätt.",
-    isLink: {
-      listing: null,
-      link_to_listings: null
-    }
+    messageType: MessageType.TEXT_INPUT,
   }]);
   const [isTyping, setIsTyping] = useState<boolean>(false)
 
@@ -35,41 +21,20 @@ export default function useMessages() {
     })
   }, [messages?.length, isTyping]);
 
-  const handleSendMessage = async (msg: Message | null) => {
-    if (!msg) return null;
-
+  const handleSendMessage = async (msg: TextInputMessage) => {
     newMessage(msg);
 
+    await randomDelay();
+
     setIsTyping(true);
-    const data = await getBlocketLinkAndExampleListing(msg.content);
 
-    if (!data?.example_listing) {
-      const responseMessage = createMessage(
-        "Jag kunde inte hitta en bil som matchar dina önskemål, testa att söka igen!.",
-        "system");
+    const responseMessages = await getBlocketLinkAndExampleListing(msg.content);
 
-      return newMessage(responseMessage);
-    }
-
-    const responseMessage = createMessage(
-      "Här är ett exempel som matchar din sökning. Om du tycker att det stämmer, kan du gå direkt till alla annonser. Annars är du välkommen att formulera din sökning på nytt.",
-      "system");
-
-    newMessage(responseMessage);
-
-    const linkMessage = createLinkMessage({
-      listing: data.example_listing,
-      link_to_listings: null
+    responseMessages.forEach((message) => {
+      newMessage(message)
     })
-    newMessage(linkMessage)
 
-    const listingsLinkMessage = createLinkMessage({
-      listing: null,
-      link_to_listings: data.web_url
-    })
-    newMessage(listingsLinkMessage)
-
-    return setIsTyping(false);
+    setIsTyping(false);
   }
 
   const newMessage = (msg: Message | null) => {

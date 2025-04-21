@@ -1,11 +1,10 @@
 "use client"
-import useMessages from "@/utils/hooks/useMessages";
 import MessageBubble from "../atoms/MessageBubble";
 import BlocketLogo from "../svgs/BlocketLogo";
-import { useEffect, useRef } from "react";
 import { motion as m } from "framer-motion"
-import { createMessage } from "@/utils/functions/messageFunctions";
 import { useForm } from "react-hook-form";
+import { MessageType, TextInputMessage } from "@/utils/types/messageTypes";
+import useMessages from "@/utils/hooks/useMessages";
 
 type UserSearchInput = {
   query: string
@@ -22,8 +21,14 @@ export default function ChatView() {
   const { messages, handleSendMessage, isTyping, scrollRef } = useMessages();
 
   const submitInput = async (inputData: UserSearchInput) => {
+    const message: TextInputMessage = {
+      messageType: MessageType.TEXT_INPUT,
+      content: inputData.query,
+      sender: "user"
+    };
+
     reset();
-    handleSendMessage(createMessage(inputData.query, "user"));
+    handleSendMessage(message);
   };
 
   return (

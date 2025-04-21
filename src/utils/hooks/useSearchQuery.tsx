@@ -1,60 +1,56 @@
 "use client"
-import { useState } from "react";
+import { messageWithError } from "../messageWithError";
 import { ExampleListing } from "../types/exampleListing";
+import { Message, MessageType } from "../types/messageTypes";
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
 
-export type UrlState = "loading" | "success" | "error";
+export const getBlocketLinkAndExampleListing = async (input: string): Promise<Message[]> => {
 
-type ExampleListingMessageResponse = {
-  web_url: string | null,
-  example_listing: ExampleListing | null
-} | null
-
-export function useSearchQuery() {
-  const [urlState, setUrlState] = useState<UrlState | null>(null)
-
-  const getBlocketLinkAndExampleListing = async (input: string | null): Promise<ExampleListingMessageResponse | null> => {
-    setUrlState(null);
-
-    if (!input) {
-      return null;
-    }
-
-    setUrlState("loading");
-
-    if (!BACKEND_URL) {
-      setUrlState("error");
-      return {
-        example_listing: null,
-        web_url: null
-      }
-    }
-
-    try {
-      const response = await fetch(`${BACKEND_URL}/create-filters-from-query`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ search_query: input })
-      });
-
-      const data: {
-        web_url: string | null,
-        example_listing: ExampleListing | null
-      } = await response.json();
-
-      return {
-        web_url: data.web_url,
-        example_listing: data.example_listing
-      }
-    } catch (e) {
-      setUrlState("error");
-      return null
-    }
+  if (!BACKEND_URL) {
+    return [{
+      content: "Vi upplever just nu tekniska problem med tjänsten. Vänligen försök igen om en stund.",
+      sender: "system",
+      messageType: MessageType.TEXT_INPUT
+    }]
   }
 
+  try {
+    const response = await fetch(`${BACKEND_URL}/create-filters-from-query`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ search_query: input })
+    });
 
-  return { urlState, getBlocketLinkAndExampleListing }
+    if (!response.ok) {
+      const errorMessageToUser = messageWithError(response.status)
+      return [errorMessageToUser];
+    }
+
+    const data: { web_url: string, example_listing: ExampleListing } | null = await response.json();
+
+    if (!data) {
+      const errorMessageToUser = messageWithError(500)
+      return [errorMessageToUser];
+    }
+
+    return [
+      {
+        messageType: MessageType.TEXT_INPUT,
+        content: "Här är ett exempel som matchar din sökning. Om du tycker att det stämmer, kan du gå direkt till alla annonser. Annars är du välkommen att formulera din sökning på nytt.",
+        sender: "system"
+      },
+      {
+        messageType: MessageType.LINK_INPUT,
+        isLink: {
+          listing: data.example_listing,
+          link_to_listings: data.web_url
+        }
+      }]
+  } catch (e) {
+    console.log(e)
+    return [messageWithError(500)];
+  }
 }
