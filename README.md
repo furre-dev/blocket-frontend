@@ -47,6 +47,20 @@ This allows deeper filtering even when Blocket doesn't offer model-code-based se
 
 ---
 
+### 3. **Workaround for missing models (e.g., Mercedes C63 AMG)**
+Some specific models—like the **C63 AMG**—don’t exist in Blocket’s standard model list. To find them accurately, we use a combination of broader filters and a targeted search query.
+
+For example:  
+```
+brand: "Mercedes-Benz",
+model: "AMG-Modeller",
+query: "C 63"
+```
+
+This setup ensures we’re pulling only the relevant **C 63 AMG** listings, even when they’re not directly selectable.
+
+---
+
 ## Project Structure
 
     src/
