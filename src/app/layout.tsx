@@ -16,7 +16,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={mainFont.className}>{children}</body>
+      <body className={mainFont.className}>
+        <main className="max-w-[85%] w-[1000px] h-screen flex justify-center mx-auto pt-4 pb-8">
+          <section className="flex flex-col justify-center items-center w-full relative">
+            {children}
+          </section>
+        </main>
+      </body>
     </html>
   );
 }

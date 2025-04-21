@@ -1,22 +1,30 @@
+"use client"
 import useMessages from "@/utils/hooks/useMessages";
 import MessageBubble from "../atoms/MessageBubble";
 import BlocketLogo from "../svgs/BlocketLogo";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { motion as m } from "framer-motion"
 import { createMessage } from "@/utils/functions/messageFunctions";
+import { useForm } from "react-hook-form";
+
+type UserSearchInput = {
+  query: string
+}
 
 export default function ChatView() {
-  const [userMessageInputValue, setUserMessageInputValue] = useState<string | null>(null);
-  const { messages, handleSendMessage, isTyping } = useMessages();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    reset,
+  } = useForm<UserSearchInput>()
 
-  const scrollView = useRef<HTMLElement>(null)
+  const { messages, handleSendMessage, isTyping, scrollRef } = useMessages();
 
-  useEffect(() => {
-    scrollView.current?.scrollTo({
-      top: scrollView.current.scrollHeight,
-      behavior: "smooth"
-    })
-  }, [messages?.length, isTyping]);
+  const submitInput = async (inputData: UserSearchInput) => {
+    reset();
+    handleSendMessage(createMessage(inputData.query, "user"));
+  };
 
   return (
     <section className="w-full h-full flex flex-col items-center">
@@ -37,7 +45,7 @@ export default function ChatView() {
         animate={{ opacity: 1, y: 0, }}
         transition={{ type: "spring", delay: 0.4 }}
         exit={{ opacity: 0, y: 10, transition: { delay: 0.4 } }}
-        ref={scrollView}
+        ref={scrollRef}
         className="chat-section w-full flex-grow py-2 overflow-y-scroll overflow-x-hidden flex flex-col gap-2">
         {messages?.map((msg, i) => {
           return (
@@ -52,14 +60,9 @@ export default function ChatView() {
         animate={{ opacity: 1, y: 0, }}
         transition={{ type: "spring", delay: 0.6 }}
         exit={{ opacity: 0, y: 10, transition: { delay: 0.2 } }}
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSendMessage(createMessage(userMessageInputValue, "user"));
-          setUserMessageInputValue(null)
-        }} className="w-full flex gap-2">
+        onSubmit={handleSubmit(submitInput)} className="w-full flex gap-2">
         <input
-          value={userMessageInputValue ?? ""}
-          onChange={(e) => setUserMessageInputValue(e.target.value)}
+          {...register("query")}
           placeholder="Beskriv din drömbil"
           className="bg-[#FAFAFA] border-[#D9D9D9] border-2 rounded-[10px] px-5 py-2 flex-grow outline-none" />
         <button className="bg-[#EF404F] px-4 py-0 rounded-[10px] text-white">Skicka</button>

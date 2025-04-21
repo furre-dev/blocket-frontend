@@ -1,3 +1,5 @@
+"use client"
+
 import BlocketLogo from "../svgs/BlocketLogo";
 import { motion as m } from "framer-motion"
 import Link from "next/link";
@@ -22,7 +24,7 @@ export default function LandingView() {
       >
         <Link
           /*  */
-          href={"/?chatMode=true"}
+          href={"/chat"}
           className="text-white text-xl">Chatta med Johan
         </Link>
       </m.div>

@@ -1,12 +1,9 @@
-import HomeComponent from "@/components/HomeComponent";
-import { chatModeIsActive } from "@/utils/functions/chatModeIsActive";
+import LandingView from "@/components/molecules/LandingView";
 
-export default function Home({ searchParams, }: { searchParams?: { [key: string]: string | string[] | undefined }; }) {
-  const chatMode = chatModeIsActive(searchParams);
+export default function Home() {
 
   return (
-    <HomeComponent
-      chatMode={chatMode}
-    />);
+    <LandingView />
+  );
 }
 
