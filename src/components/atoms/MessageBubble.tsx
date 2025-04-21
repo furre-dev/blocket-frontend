@@ -14,7 +14,6 @@ export default function MessageBubble({ message }: { message: Message }) {
   if (message.isLink.link_to_listings) {
     return (
       <Link
-        target="_blank"
         className="px-4 py-3 bg-[#F1F5F9] border-[#A4A4A4] border w-max max-w-[90%] rounded-xl text-blue-800 text-sm md:text-base flex justify-center gap-2"
         href={message.isLink.link_to_listings}>
         <span className="material-symbols-rounded my-auto !text-[20px]">

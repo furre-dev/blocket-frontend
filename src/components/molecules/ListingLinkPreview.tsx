@@ -10,7 +10,6 @@ export default function ListingLinkPreview({ linkListing }: { linkListing: Examp
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       href={linkListing.link}
-      target="_blank"
       className="bg-[#F1F5F9] border-[#A4A4A4] border rounded-[10px] pb-2 w-[380px] max-w-[80%] overflow-hidden flex-shrink-0">
       {linkListing.thumbnail_image && (
         <Image

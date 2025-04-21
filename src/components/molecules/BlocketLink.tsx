@@ -32,7 +32,6 @@ export default function BlocketLink({ state, href }: { state: UrlState | null, h
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeInOut" }}
       href={href ? href : "#"}
-      target="_blank"
       className={`flex justify-between w-full max-w-[360px] text-base font-semibold text-[#EF404F] py-3 px-4 border border-[#EF404F] rounded-full mt-10 transition-all duration-500
       ${!linkIsReady ? "pointer-events-none cursor-not-allowed" : ""} ${state === "success" ? "border-opacity-0 bg-[#EF404F] !text-white" : ""}`}>
       {components[state].map((component) => {
