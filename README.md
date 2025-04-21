@@ -10,6 +10,40 @@ Welcome to **Blocket - Enhanced Car Search**! This is a Next.js application desi
 - 🖼️ **Listing Previews:** Message bubbles can render inline listing previews, showing key details and images.
 - 🔗 **Direct Listing Links:** Get direct links to all listings matching your criteria.
 - 💎 **Modern UI:** Built with [Next.js](https://nextjs.org/), Tailwind CSS, Framer Motion, and modern web standards.
+- 🚀 Smart Filters Beyond Blocket: Intelligent techniques to filter listings even when Blocket doesn’t offer specific filter options.
+
+---
+
+## Top Filtering Enhancements
+
+Blocket doesn’t always provide the most precise filters, so this app includes workarounds to help you target exactly what you’re looking for:
+
+### 1. **Filter for Cupra Models (e.g., Seat Leon Cupra)**  
+Blocket lacks direct filters for certain performance submodels like the **Cupra**, but we can infer them using horsepower ranges.
+
+**Example filter:**  
+'''
+brand: "Seat",
+model: "Leon",
+engineEffect: { start: 270, end: 320 }
+'''
+
+We apply a small **error margin** to capture real-world listing variations. This helps surface **Seat Leon Cupra** models even though "Cupra" isn’t a selectable model.
+
+---
+
+### 2. **Search by Model Codes (e.g., BMW F10 / F30)**  
+You can also search using **chassis/model codes**, like "BMW F10" or "BMW F30".
+
+This automatically translates into a filtered query based on **model year ranges** for those specific generations.
+
+For example:  
+'''
+query: "BMW F30"
+→ translates to: modelYear: { start: 2012, end: 2019 }
+'''
+
+This allows deeper filtering even when Blocket doesn't offer model-code-based search.
 
 ---
 
