@@ -10,7 +10,7 @@ Welcome to **Blocket - Enhanced Car Search**! This is a Next.js application desi
 - 🖼️ **Listing Previews:** Message bubbles can render inline listing previews, showing key details and images.
 - 🔗 **Direct Listing Links:** Get direct links to all listings matching your criteria.
 - 💎 **Modern UI:** Built with [Next.js](https://nextjs.org/), Tailwind CSS, Framer Motion, and modern web standards.
-- 🚀 Smart Filters Beyond Blocket: Intelligent techniques to filter listings even when Blocket doesn’t offer specific filter options.
+- 🚀 **Smart Filters Beyond Blocket:** Intelligent techniques to filter listings even when Blocket doesn’t offer specific filter options.
 
 ---
 
