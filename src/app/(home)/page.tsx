@@ -1,4 +1,4 @@
-import LandingView from "@/components/molecules/LandingView";
+import LandingView from "@/components/organisms/LandingView";
 
 export default function Home() {
   return (

@@ -16,7 +16,7 @@ export default function LandingView() {
         <BlocketLogo />
       </m.div>
       <m.div
-        className="mt-10 bg-[#EF404F] px-8 py-6 rounded-xl"
+        className="mt-4 md:mt-10 bg-[#EF404F] px-4 md:px-8 py-4 md:py-6 rounded-xl"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0, }}
         transition={{ type: "spring", delay: 0.5 }}

@@ -1,5 +1,5 @@
 "use client"
-import MessageBubble from "../atoms/MessageBubble";
+import MessageBubble from "../molecules/MessageBubble";
 import BlocketLogo from "../svgs/BlocketLogo";
 import { motion as m } from "framer-motion"
 import { useForm } from "react-hook-form";

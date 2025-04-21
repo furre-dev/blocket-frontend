@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function BlocketLogo() {
   return (
-    <Link href={"/"}>
+    <Link href={"/"} className="!scale-75 md:!scale-100 block">
       <svg xmlns="http://www.w3.org/2000/svg" width="300" height="67" viewBox="0 0 129 28" fill="none">
         <g clipPath="url(#clip0)">
           <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="129" height="29">
