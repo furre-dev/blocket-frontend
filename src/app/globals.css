@@ -9,9 +9,17 @@
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .chat-section {
-  padding-bottom: env(safe-area-inset-bottom);
   -ms-overflow-style: none;
   /* IE and Edge */
   scrollbar-width: none;
   /* Firefox */
+}
+
+@media screen and (max-width: 767px) {
+
+  _::-webkit-full-page-media,
+  _:future,
+  :root .safari_only {
+    padding-bottom: 65px;
+  }
 }

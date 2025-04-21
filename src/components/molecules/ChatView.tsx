@@ -46,7 +46,7 @@ export default function ChatView() {
         transition={{ type: "spring", delay: 0.4 }}
         exit={{ opacity: 0, y: 10, transition: { delay: 0.4 } }}
         ref={scrollRef}
-        className="chat-section w-full flex-grow py-2 overflow-y-scroll overflow-x-hidden flex flex-col gap-2">
+        className="chat-section safari_only w-full flex-grow py-2 overflow-y-scroll overflow-x-hidden flex flex-col gap-2">
         {messages?.map((msg, i) => {
           return (
             <MessageBubble key={i} message={msg} />
