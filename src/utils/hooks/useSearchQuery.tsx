@@ -1,40 +1,54 @@
 "use client"
-import { useState, useTransition } from "react";
-import { createDataFromUserPrompt } from "../functions/api-functions/createDataFromUserPrompt";
-import { generateCarSearchURL } from "../functions/generateCarSearchURL";
-import { findCarModel } from "../functions/api-functions/findCarModel";
-import { CarListing, findFirstCarFormRelevantListings } from "../functions/api-functions/findFirstCarFromRelevantListings";
+import { useState } from "react";
+import { ExampleListing } from "../types/exampleListing";
+
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
 
 export type UrlState = "loading" | "success" | "error";
 
-type CarListingMessageResponse = {
-  listings_url: string | null,
-  example_car: CarListing | null
+type ExampleListingMessageResponse = {
+  web_url: string | null,
+  example_listing: ExampleListing | null
 } | null
 
 export function useSearchQuery() {
   const [urlState, setUrlState] = useState<UrlState | null>(null)
 
-  const createBlocketLinkWithUserSearchFilters = async (input: string | null): Promise<CarListingMessageResponse | null> => {
+  const getBlocketLinkAndExampleListing = async (input: string | null): Promise<ExampleListingMessageResponse | null> => {
     setUrlState(null);
+
     if (!input) {
       return null;
     }
 
     setUrlState("loading");
-    try {
-      const result = await createDataFromUserPrompt(input);
-      if (!result || !result.car_data) {
-        setUrlState("error");
-        return null;
-      }
-      const blocketUrl = generateCarSearchURL(result.car_data);
-      const firstListing = await findFirstCarFormRelevantListings(result.car_data);
-      setUrlState("success");
+
+    if (!BACKEND_URL) {
+      setUrlState("error");
       return {
-        listings_url: blocketUrl,
-        example_car: firstListing.data ? firstListing.data : null
-      };
+        example_listing: null,
+        web_url: null
+      }
+    }
+
+    try {
+      const response = await fetch(`${BACKEND_URL}/create-filters-from-query`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ search_query: input })
+      });
+
+      const data: {
+        web_url: string | null,
+        example_listing: ExampleListing | null
+      } = await response.json();
+
+      return {
+        web_url: data.web_url,
+        example_listing: data.example_listing
+      }
     } catch (e) {
       setUrlState("error");
       return null
@@ -42,5 +56,5 @@ export function useSearchQuery() {
   }
 
 
-  return { urlState, createBlocketLinkWithUserSearchFilters }
+  return { urlState, getBlocketLinkAndExampleListing }
 }

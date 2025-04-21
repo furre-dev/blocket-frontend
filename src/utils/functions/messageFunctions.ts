@@ -1,10 +1,10 @@
 import { Message } from "../hooks/useMessages";
-import { CarListing } from "./api-functions/findFirstCarFromRelevantListings";
+import { ExampleListing } from "../types/exampleListing";
 
 export const defaultErrorMessage = "Det verkar som att det inte finns några bilar som matchar din sökning just nu. Du kanske kan prova att ange fler detaljer som årsmodell, prisintervall eller önskad körsträcka för att få bättre resultat."
 
 export const createLinkMessage = ({ listing, link_to_listings }: {
-  listing: CarListing | null,
+  listing: ExampleListing | null,
   link_to_listings: string | null
 }): Message => {
   return {

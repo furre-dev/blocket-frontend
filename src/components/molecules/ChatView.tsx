@@ -3,8 +3,6 @@ import MessageBubble from "../atoms/MessageBubble";
 import BlocketLogo from "../svgs/BlocketLogo";
 import { useEffect, useRef, useState } from "react";
 import { motion as m } from "framer-motion"
-import Image from "next/image";
-import Link from "next/link";
 import { createMessage } from "@/utils/functions/messageFunctions";
 
 export default function ChatView() {

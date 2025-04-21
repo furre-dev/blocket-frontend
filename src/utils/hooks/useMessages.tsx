@@ -1,20 +1,19 @@
 import { useEffect, useState } from "react";
 import { useSearchQuery } from "./useSearchQuery";
-import { CarListing } from "../functions/api-functions/findFirstCarFromRelevantListings";
-import { giveFeedbackOnUserInput } from "../functions/openai/giveFeedbackToUserInput";
-import { createLinkMessage, createMessage, defaultErrorMessage } from "../functions/messageFunctions";
+import { createLinkMessage, createMessage } from "../functions/messageFunctions";
+import { ExampleListing } from "../types/exampleListing";
 
 export type Message = {
   sender: "user" | "system",
   content: string | null,
   isLink: {
-    listing: CarListing | null
+    listing: ExampleListing | null
     link_to_listings: string | null
   }
 }
 
 export default function useMessages() {
-  const { createBlocketLinkWithUserSearchFilters, urlState } = useSearchQuery();
+  const { getBlocketLinkAndExampleListing, urlState } = useSearchQuery();
 
   const [messages, setMessages] = useState<Message[] | null>([{
     sender: "system",
@@ -32,33 +31,27 @@ export default function useMessages() {
     newMessage(msg);
 
     setIsTyping(true);
-    const data = await createBlocketLinkWithUserSearchFilters(msg.content);
-
-
-    // if there was no car data, respond with an 'error' message to the user
-    if (!data?.example_car) {
-      const feedback = await giveFeedbackOnUserInput(msg.content);
-      const feedbackMessage = createMessage(feedback ?? defaultErrorMessage, "system");
-      newMessage(feedbackMessage);
-
-      return setIsTyping(false);
-    }
+    const data = await getBlocketLinkAndExampleListing(msg.content);
 
     const responseMessage = createMessage(
       "Här är ett exempel som matchar din sökning. Om du tycker att det stämmer, kan du gå direkt till alla annonser. Annars är du välkommen att formulera din sökning på nytt.",
-      "system")
+      "system");
 
-    newMessage(responseMessage)
+    newMessage(responseMessage);
+
+    if (!data) {
+      return;
+    }
 
     const linkMessage = createLinkMessage({
-      listing: data.example_car,
+      listing: data.example_listing,
       link_to_listings: null
     })
     newMessage(linkMessage)
 
     const listingsLinkMessage = createLinkMessage({
       listing: null,
-      link_to_listings: data.listings_url
+      link_to_listings: data.web_url
     })
     newMessage(listingsLinkMessage)
 
