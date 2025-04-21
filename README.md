@@ -22,11 +22,11 @@ Blocket doesn’t always provide the most precise filters, so this app includes 
 Blocket lacks direct filters for certain performance submodels like the **Cupra**, but we can infer them using horsepower ranges.
 
 **Example filter:**  
-'''
+```
 brand: "Seat",
 model: "Leon",
 engineEffect: { start: 270, end: 320 }
-'''
+```
 
 We apply a small **error margin** to capture real-world listing variations. This helps surface **Seat Leon Cupra** models even though "Cupra" isn’t a selectable model.
 
@@ -38,10 +38,10 @@ You can also search using **chassis/model codes**, like "BMW F10" or "BMW F30".
 This automatically translates into a filtered query based on **model year ranges** for those specific generations.
 
 For example:  
-'''
+```
 query: "BMW F30"
 → translates to: modelYear: { start: 2012, end: 2019 }
-'''
+```
 
 This allows deeper filtering even when Blocket doesn't offer model-code-based search.
 
