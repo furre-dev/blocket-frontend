@@ -6,7 +6,7 @@ import { getSessionTokenCookie } from "./session/getSessionTokenCookie";
 import { BlocketAPIResponse } from "./types/dataApiResponses";
 import { Message, MessageType } from "./types/messageTypes";
 
-export const getBlocketLinkAndExampleListing = async (input: string, retries = 0): Promise<Message[]> => {
+export const getBlocketLinkAndExampleListing = async (input: string): Promise<Message[]> => {
   const sessionToken = await getSessionTokenCookie();
 
   if (!BACKEND_URL || !sessionToken) {
