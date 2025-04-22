@@ -1,13 +1,15 @@
 "use server"
+import { BACKEND_URL } from "../backendUrl";
 import HttpStatusCode from "../HttpsStatusCode";
 import { createErrorMessage, messageWithError } from "../messageWithError";
-import { BlocketAPIResponse } from "../types/apiResponse";
+import { getSessionTokenCookie } from "../session/getSessionTokenCookie";
+import { BlocketAPIResponse } from "../types/dataApiResponses";
 import { Message, MessageType } from "../types/messageTypes";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
-
 export const getBlocketLinkAndExampleListing = async (input: string): Promise<Message[]> => {
-  if (!BACKEND_URL) {
+  const sessionToken = await getSessionTokenCookie();
+
+  if (!BACKEND_URL || !sessionToken) {
     return [messageWithError(HttpStatusCode.INTERNAL_SERVER_ERROR)]
   }
 
@@ -15,7 +17,8 @@ export const getBlocketLinkAndExampleListing = async (input: string): Promise<Me
     const response = await fetch(`${BACKEND_URL}/create-filters-from-query`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${sessionToken}`
       },
       body: JSON.stringify({ search_query: input })
     });

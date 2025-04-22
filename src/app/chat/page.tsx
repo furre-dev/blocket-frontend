@@ -1,6 +1,8 @@
+"use server"
+
 import ChatView from "@/components/organisms/ChatView";
 
-export default function Page() {
+export default async function Page() {
   return (
     <ChatView />
   )
