@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { getBlocketLinkAndExampleListing } from "./useSearchQuery";
+import { getBlocketLinkAndExampleListing } from "../getBlocketLinkAndExampleListing";
 import { Message, MessageType, TextInputMessage } from "../types/messageTypes";
 import { randomDelay } from "../getRandomDelay";
 

@@ -5,7 +5,7 @@ import { BACKEND_URL } from "../backendUrl";
 import { validateSessionToken } from "./validateSessionToken";
 import { cookies } from "next/headers";
 
-export const createSessionToken = async (): Promise<SessionState> => {
+export const createNewOrValidateCurrentSessionToken = async (): Promise<SessionState> => {
   const tokenIsValid = await validateSessionToken();
 
   if (tokenIsValid) {

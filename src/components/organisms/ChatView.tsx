@@ -5,15 +5,14 @@ import LogoSection from "../atoms/LogoSection";
 import ChatSection from "../molecules/chat-sections/ChatSection";
 import ChatFormSection from "../molecules/chat-sections/ChatFormSection";
 import { useEffect } from "react";
-import { setSessionCookie } from "@/utils/session/setSessionCookie";
-import { getSessionTokenCookie } from "@/utils/session/getSessionTokenCookie";
 
 export default function ChatView() {
   const { messages, handleSendMessage, isTyping, scrollRef } = useMessages();
 
+  // useEffect to set cookie
   useEffect(() => {
     (async () => {
-      await setSessionCookie()
+      await fetch("http://localhost:3000/api/create-session")
     })()
   }, [])
 

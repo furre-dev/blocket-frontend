@@ -25,7 +25,7 @@ export const messageWithError = (status: HttpStatusCode): Message => {
       }
     default:
       return {
-        content: "Vi upplever just nu tekniska problem med tjänsten. Vänligen försök igen om en stund.",
+        content: "Vi upplever just nu tekniska problem med tjänsten. Vänligen försök igen om en stund, eller ladda om sidan.",
         sender: "system",
         messageType: MessageType.TEXT_INPUT
       }
