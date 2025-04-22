@@ -25,9 +25,6 @@ export default function useMessages() {
     // we push the user message to the chat window
     newMessage(msg);
 
-    // first we give them the feedback message indicating that the search has begun.
-    await sendFilterProcessStartedMessageToUser()
-
     // then we actually try to filter the search query
     const responseMessages = await getBlocketLinkAndExampleListing(msg.content);
 
@@ -44,24 +41,6 @@ export default function useMessages() {
 
     // now Johan has sent all the messages to the chat and can stop writing.
     setIsTyping(false);
-  }
-
-  const sendFilterProcessStartedMessageToUser = async () => {
-    await randomDelay();
-
-    setIsTyping(true);
-
-    await randomDelay();
-
-    const processHasStartedMessage: TextInputMessage = {
-      messageType: MessageType.TEXT_INPUT,
-      sender: "system",
-      content: "Tack för ditt sök! Nu sätter jag igång med att leta efter annonser som matchar dina önskemål. Om din sökning är lite mer avancerad kan det ta en liten stund, men jag uppskattar verkligen ditt tålamod, snart återkommer jag med något spännande.",
-    }
-
-    newMessage(processHasStartedMessage);
-
-    setIsTyping(false)
   }
 
   const newMessage = (msg: Message | null) => {

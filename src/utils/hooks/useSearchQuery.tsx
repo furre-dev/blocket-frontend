@@ -1,18 +1,14 @@
-"use client"
-import { messageWithError } from "../messageWithError";
-import { ExampleListing } from "../types/exampleListing";
+"use server"
+import HttpStatusCode from "../HttpsStatusCode";
+import { createErrorMessage, messageWithError } from "../messageWithError";
+import { BlocketAPIResponse } from "../types/apiResponse";
 import { Message, MessageType } from "../types/messageTypes";
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
 
 export const getBlocketLinkAndExampleListing = async (input: string): Promise<Message[]> => {
-
   if (!BACKEND_URL) {
-    return [{
-      content: "Vi upplever just nu tekniska problem med tjänsten. Vänligen försök igen om en stund.",
-      sender: "system",
-      messageType: MessageType.TEXT_INPUT
-    }]
+    return [messageWithError(HttpStatusCode.INTERNAL_SERVER_ERROR)]
   }
 
   try {
@@ -24,19 +20,17 @@ export const getBlocketLinkAndExampleListing = async (input: string): Promise<Me
       body: JSON.stringify({ search_query: input })
     });
 
-    if (!response.ok) {
-      const errorMessageToUser = messageWithError(response.status)
-      return [errorMessageToUser];
+    const { data, error }: BlocketAPIResponse = await response.json();
+
+    if (error) {
+      if (error.feedback) {
+        return [createErrorMessage(error.feedback)];
+      }
+
+      return [messageWithError(error.code)];
     }
 
-    const data: { web_url: string, example_listing: ExampleListing } | null = await response.json();
-
-    if (!data) {
-      const errorMessageToUser = messageWithError(500)
-      return [errorMessageToUser];
-    }
-
-    return [
+    const linkMessages: Message[] = [
       {
         messageType: MessageType.TEXT_INPUT,
         content: "Här är ett exempel som matchar din sökning. Om du tycker att det stämmer, kan du gå direkt till alla annonser. Annars är du välkommen att formulera din sökning på nytt.",
@@ -48,9 +42,11 @@ export const getBlocketLinkAndExampleListing = async (input: string): Promise<Me
           listing: data.example_listing,
           link_to_listings: data.web_url
         }
-      }]
+      }];
+
+    return linkMessages;
   } catch (e) {
     console.log(e)
-    return [messageWithError(500)];
+    return [messageWithError(HttpStatusCode.INTERNAL_SERVER_ERROR)];
   }
 }
